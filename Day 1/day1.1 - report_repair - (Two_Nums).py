@@ -40,10 +40,41 @@ def expense_report(num_list, result):
         else:
             results[num] = index
 
-print(sorting_expense_report([1837,
+
+def binary_report(nums_list, result):
+    nums_list.sort()
+    mid = 0
+    start = 0
+    end = len(nums_list) - 1
+    step = 0
+
+
+    while start <= end:
+
+        step += 1
+        mid = (start + end) // 2
+
+        total = nums_list[start] + nums_list[end]
+        print(step)
+        # if result == nums_list[mid]:
+        #     return mid
+        # if result < nums_list[mid]:
+        #     end = mid - 1
+        # else:
+        #     start = mid + 1
+        if total < result:
+            start += 1
+        elif total > result:
+            end -= 1
+        else:
+            return nums_list[start], nums_list[end]
+    return -1
+
+print(binary_report([1837,
 1585,
 1894,
 1715,
+2020,
 1947,
 1603,
 1746,

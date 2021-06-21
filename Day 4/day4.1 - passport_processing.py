@@ -1,33 +1,25 @@
-with open("Day 4/day4.txt") as f:
-    file = f.read()
+with open("day4.txt") as f:
+    file = f.read().split("\n\n")
 
+file = [i.replace("\n", " ") for i in file]
 
-formatted_file = file.split("\n\n")
-
-passports = []
-for line in formatted_file:
-    passports.append(line.replace("\n", " ").split())
-
+required_fields = {"byr": False, "iyr": False, "eyr": False, "hgt": False, "hcl": False, "ecl": False, "pid": False}
+formatted_file = [line.split() for line in file]
 count = 0
-details_count = 0
-for passport in passports:
-    if len(passport) == 8:
-        count += 1
-    elif len(passport) == 7:
-        for details in passport:
-            details = details.split(":")
-            if details[0] != "cid":
-                details_count += 1
-            if details[0] == "cid":
-                details_count = 0
-                break
-            if details_count == 7:
-                details_count = 0
-                count += 1
-        
-print(count)
-                
-        
+for i in formatted_file:
+    for j in i:
+        key = j.split(":")[0]
+        if key in required_fields:
+            required_fields[key] = True
 
-                
-                
+    if all(value == 1 for value in required_fields.values()):
+        count += 1
+        required_fields = {"byr": False, "iyr": False, "eyr": False, "hgt": False, "hcl": False, "ecl": False,
+                           "pid": False}
+    else:
+        required_fields = {"byr": False, "iyr": False, "eyr": False, "hgt": False, "hcl": False, "ecl": False,
+                           "pid": False}
+print(count)
+
+
+
